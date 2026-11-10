@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   motion, AnimatePresence, useReducedMotion, useScroll, useSpring, useTransform
@@ -94,6 +95,26 @@ const projects = [
     links: [
       { label: 'Read Published Paper', href: 'https://journal.50sea.com/index.php/IJIST/article/view/1723' },
       {label: 'View Code on GitHub', href: 'https://github.com/aleena-azam510/multimodal-skin-disease-detectionn'}
+    ]
+  },
+  {
+    title: 'Cognifile AI — Document Intelligence Platform',
+    category: 'AI · DOCUMENT INTELLIGENCE',
+    status: 'FEATURED PROJECT',
+    summary: 'An AI-powered document intelligence platform that transforms PDF files into searchable knowledge using semantic retrieval and Retrieval-Augmented Generation (RAG).',
+    points: [
+      'Built a FastAPI backend for PDF ingestion, text extraction, chunking, document management and question-answering workflows.',
+      'Generated 384-dimensional semantic embeddings with Sentence Transformers and indexed document chunks in a Qdrant vector database.',
+      'Implemented similarity-based retrieval to provide relevant document context with page and chunk source references.',
+      'Developed a React and TypeScript dashboard for document uploads, document management, topic exploration and AI-assisted question answering.',
+      'Added Gemini API integration for LLM-based response generation; final live verification remains pending.'
+    ],
+    stack: ['Python', 'FastAPI', 'React', 'TypeScript', 'Qdrant', 'Sentence Transformers', 'PyMuPDF', 'SQLite', 'Gemini API'],
+    artLabel: 'DOCUMENT INTELLIGENCE',
+    artSubLabel: 'PDF INGESTION · SEMANTIC SEARCH · RAG',
+    visual: 'cognifile',
+    links: [
+      { label: 'View Code on GitHub', href: 'https://github.com/aleena-azam510/Cognifile-AI' }
     ]
   },
   {
@@ -529,6 +550,62 @@ function MultimodalVisualizer() {
   );
 }
 
+/* ---------- Cognifile AI Visual (Project 02) ---------- */
+function CognifileVisualizer() {
+  return (
+    <div className="testing-visualizer">
+      <motion.div
+        className="test-card question-card"
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="card-tag">
+          <BrainCircuit size={12} /> RAG QUESTION
+          <span className="test-timer">PDF → ANSWER</span>
+        </div>
+        <div className="question-text">
+          Ask questions. Retrieve relevant knowledge.
+        </div>
+        <div className="question-options">
+          <div className="opt is-selected"><span className="opt-dot" /> Semantic retrieval</div>
+          <div className="opt"><span className="opt-dot" /> Document context</div>
+          <div className="opt"><span className="opt-dot" /> Source references</div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="test-card score-card"
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.15 }}
+      >
+        <div className="card-tag"><Database size={12} /> RETRIEVAL PIPELINE</div>
+        <div className="score-topics">
+          <div className="topic-row"><span>Embeddings</span><b>384-D</b></div>
+          <div className="topic-row"><span>Vector store</span><b>Qdrant</b></div>
+          <div className="topic-row"><span>Grounding</span><b>Page refs</b></div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="db-pills"
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+      >
+        <span><Workflow size={11} /> FastAPI · RAG</span>
+        <span><BrainCircuit size={11} /> Gemini API</span>
+      </motion.div>
+
+      <div className="visualizer-hint">PDF ingestion · semantic search · document intelligence</div>
+    </div>
+  );
+}
+
 /* ---------- Testing Platform Visual (Project 02) ---------- */
 function TestingPlatformVisual() {
   const reduced = useReducedMotion();
@@ -613,9 +690,11 @@ function TestingPlatformVisual() {
 
 /* ---------- Reusable Project Feature ---------- */
 function ProjectFeature({ project, index }) {
-  const visual = project.visual === 'testing'
-    ? <TestingPlatformVisual />
-    : <MultimodalVisualizer />;
+  const visual = project.visual === 'cognifile'
+    ? <CognifileVisualizer />
+    : project.visual === 'testing'
+      ? <TestingPlatformVisual />
+      : <MultimodalVisualizer />;
 
   return (
     <MagneticProject>
